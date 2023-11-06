@@ -15,6 +15,7 @@ const Router = () => {
             <Suspense fallback={<Loader/>}>
                 <Routes>
                     <Route path="/" element={<Layout/>}>
+                        
                         {publicRoutes.map(({ path, Element }) => (
                             <Route key={path} path={path} element={<Element/>}/>
                         ))}
