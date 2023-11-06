@@ -3,7 +3,6 @@ import React, {MouseEventHandler} from 'react';
 interface IButtonLight {
     label: string;
     onClick?: MouseEventHandler<HTMLButtonElement>;
-
     rightIcon?: React.JSX.Element;
 }
 
