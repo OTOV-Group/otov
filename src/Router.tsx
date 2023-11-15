@@ -1,4 +1,4 @@
-import React, {Suspense} from "react";
+import {Suspense} from "react";
 import {Route, Routes} from "react-router-dom";
 import Layout from "./Layout/Layout";
 import {privateRoutes, publicRoutes} from "./routes";
