@@ -2,6 +2,7 @@ import React from 'react';
 import {Backdrop, CircularProgress} from "@mui/material";
 
 const Loader = () => {
+
     return (
         <Backdrop
             sx={{

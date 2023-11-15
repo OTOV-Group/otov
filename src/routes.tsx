@@ -8,14 +8,16 @@ const Profile = lazy(() => import("./pages/Profile/Profile"))
 const publicRoutes = [
     {
         path: HOME_ROUTE,
-        Element: Home
+        Element: Home,
+        index: true
     },
 ]
 
 const privateRoutes = [
     {
         path: PROFILE_ROUTE,
-        Element: Profile
+        Element: Profile,
+        index: false
     }
 ]
 

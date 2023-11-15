@@ -8,8 +8,6 @@ import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 
 const Router = () => {
 
-
-
     return (
         <>
             <Suspense fallback={<Loader/>}>
@@ -19,8 +17,8 @@ const Router = () => {
                             <Route key={path} path={path} element={<Element/>}/>
                         ))}
                         {/*<PrivateRoute>*/}
-                        {privateRoutes.map(({ path, Element }) => (
-                            <Route key={path} path={path} element={<Element/>}/>
+                        {privateRoutes.map(({ index, path, Element }) => (
+                            <Route index={index} key={path} path={path} element={<Element/>}/>
                         ))}
                         {/*</PrivateRoute>*/}
                     </Route>
