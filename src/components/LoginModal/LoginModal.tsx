@@ -2,7 +2,7 @@ import React, {useContext, useState} from "react";
 import "./LoginModal.css";
 import CloseIcon from '@mui/icons-material/Close';
 import {AppContext, closeLoginModal} from "../../ContextProvider/ContextProvider";
-import {toastSuccess, toastError} from "../Toast/toast";
+import {toastSuccess} from "../Toast/toast";
 
 const LoginModal: React.FC = () => {
     const { appState, setAppState } = useContext(AppContext);

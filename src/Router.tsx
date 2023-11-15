@@ -13,7 +13,7 @@ const Router = () => {
             <Suspense fallback={<Loader/>}>
                 <Routes>
                     <Route path="/" element={<Layout/>}>
-                        {publicRoutes.map(({ index, path, Element }) => (
+                        {publicRoutes.map(({ path, Element, index }) => (
                             <Route index={index} key={path} path={path} element={<Element/>}/>
                         ))}
                         {/*<PrivateRoute>*/}
