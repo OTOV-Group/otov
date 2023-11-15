@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import Logo from "../../ui/Logo/Logo";
 import Button from "../../ui/Button/Button";
 import {Logout} from "@mui/icons-material";
@@ -6,6 +6,7 @@ import {Menu, MenuItem} from "@mui/material";
 import ButtonMaterial from '@mui/material/Button';
 import DarkModeButton from "../../ui/DarkMode/DarkModeButton";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import {AppContext, openLoginModal} from "../../ContextProvider/ContextProvider";
 
 const Header = () => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -16,6 +17,13 @@ const Header = () => {
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    const {appState, setAppState} = useContext(AppContext);
+    const openModal = () =>{
+        setAppState(openLoginModal);
+    }
+
+
     return (
         <header className="header h-[80px] border-b" style={{ background: "#138d80" }}>
             <div className="container flex items-center justify-between h-full">
@@ -72,6 +80,7 @@ const Header = () => {
                 </div>
                 <div>
                     <Button
+                        onClick={openModal}
                         label={"Войти"}
                         type="light"
                         rightIcon={
