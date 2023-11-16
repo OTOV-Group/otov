@@ -6,6 +6,7 @@ interface IButton {
     type: "light" | "outline" | "dark";
     label: string;
 
+    
     onClick?: MouseEventHandler<HTMLButtonElement>;
     rightIcon?: React.JSX.Element;
 }
