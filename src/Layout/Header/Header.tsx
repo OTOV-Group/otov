@@ -6,7 +6,7 @@ import {Menu, MenuItem} from "@mui/material";
 import ButtonMaterial from '@mui/material/Button';
 import DarkModeButton from "../../ui/DarkMode/DarkModeButton";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import {AppContext, openLoginModal} from "../../ContextProvider/ContextProvider";
+import {AppContext, AuthSteps, changeStateAuthModals} from "../../ContextProvider/ContextProvider";
 
 const Header = () => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -20,7 +20,7 @@ const Header = () => {
 
     const {appState, setAppState} = useContext(AppContext);
     const openModal = () =>{
-        setAppState(openLoginModal);
+        setAppState(changeStateAuthModals(AuthSteps.ShowLoginModal));
     }
 
 

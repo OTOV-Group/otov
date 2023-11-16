@@ -1,25 +1,32 @@
-import React, {useContext, useRef, useState} from "react";
+import React, {useContext} from "react";
 import "./LoginModal.css";
 import CloseIcon from '@mui/icons-material/Close';
-import {AppContext, closeLoginModal} from "../../ContextProvider/ContextProvider";
+import {AppContext, AuthSteps, changeStateAuthModals} from "../../ContextProvider/ContextProvider";
 import {toastSuccess} from "../Toast/toast";
 import HorizontalShake from "../HorizontalShake/HorizontalShake";
 
 const LoginModal: React.FC = () => {
     const { appState, setAppState } = useContext(AppContext);
       
-
-    const handleSignIn = () => {
-        toastSuccess("Succesfully Signed In");
-        setAppState(closeLoginModal)
-    }
     const closeModal = () => {
-        setAppState(closeLoginModal);
+        setAppState(changeStateAuthModals(AuthSteps.Closed));
     }
 
-    if(!appState.isShowedLoginModal) {
-        return null;
+    const handleSubmit = () => {
+        toastSuccess("Succesfully Signed In");
+        closeModal();
     }
+    
+
+    const openModal = () =>{
+        setAppState(changeStateAuthModals(AuthSteps.ShowRegisterModal));
+    }
+
+    const openForgetModal = () =>{
+        setAppState(changeStateAuthModals(AuthSteps.ShowForgotModal));
+    }
+
+    if(appState.isShowedAuthModal !== AuthSteps.ShowLoginModal) { return null; }
 
     return (
             <div className="flex flex-col modal items-center absolute justify-center w-full h-screen px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -30,7 +37,7 @@ const LoginModal: React.FC = () => {
                                 <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                                     Sign in to your account
                                 </h1>
-                                <CloseIcon onClick={closeModal} className="cursor-pointer"/>
+                                <CloseIcon style={{fill: "#fff"}} onClick={closeModal} className="cursor-pointer"/>
                             </div>
                             <form className="space-y-4 md:space-y-6" action="#">
                                 <div>
@@ -50,11 +57,11 @@ const LoginModal: React.FC = () => {
                                             <label htmlFor="remember" className="text-gray-500 dark:text-gray-300">Remember me</label>
                                         </div>
                                     </div>
-                                    <a href="#" className="text-sm font-medium text-white hover:underline ">Forgot password?</a>
+                                    <button onClick={openForgetModal} className="text-sm font-medium text-white hover:underline ">Forgot password?</button>
                                 </div>
-                                <button onClick={handleSignIn} type="submit" className="w-full border-2 border-white text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover-bg-primary-700 dark:focus:ring-primary-800">Sign in</button>
+                                <button onClick={handleSubmit} type="submit" className="w-full border-2 border-white text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover-bg-primary-700 dark:focus:ring-primary-800">Sign in</button>
                                 <p className="text-sm font-light text-white">
-                                    Don’t have an account yet? <a href="#" className="font-medium text-primary-600 hover:underline  dark:text-primary-500">Sign up</a>
+                                    Don’t have an account yet? <button onClick={openModal} className="font-medium text-primary-600 hover:underline  dark:text-primary-500">Sign up</button>
                                 </p>
                             </form>
                         </div>

@@ -4,33 +4,45 @@ interface IContextProvider {
     children: React.JSX.Element;
 }
 
+export enum AuthSteps {
+    Closed = 0,
+    ShowLoginModal = 1,
+    ShowRegisterModal = 2,
+    ShowForgotModal = 3,
+
+}
+
 interface IState {
-    isShowedLoginModal: boolean;
+    isShowedAuthModal: AuthSteps;
 }
 
 interface IAppContext {
     appState: IState;
     setAppState: React.Dispatch<React.SetStateAction<IState>>;
 }
+// Login Modal
 
-export const openLoginModal = (prevState: IState): IState => {
-    return {
-        ...prevState,
-        isShowedLoginModal: true
-    }
+export function changeStateAuthModals(type: AuthSteps): (prevState: IState) => IState {
+    return (prevState: IState): IState => {
+        return {
+            ...prevState,
+            isShowedAuthModal: type
+        }
+    };
 }
 
-export const closeLoginModal = (prevState: IState): IState => {
-    return {
-        ...prevState,
-        isShowedLoginModal: false
-    }
-}
+// Ending Login Modal
+
+
+
+// Ending Register Modal
+
 export const AppContext = createContext<IAppContext>(null!);
 const ContextProvider: React.FC<IContextProvider> = ({ children }) => {
     const [ state, setState ] = useState<IState>({
-        isShowedLoginModal: false,
+        isShowedAuthModal: AuthSteps.Closed,
     });
+
 
     return (
         <AppContext.Provider value={{ appState: state, setAppState: setState }}>
