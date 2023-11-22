@@ -1,5 +1,6 @@
-import React, { useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { useClickOutsideElement } from '../../hooks/useClickOutsideElement';
+import { AppContext, changeStateShakeLogin } from '../../ContextProvider/ContextProvider';
 
 interface IHorizontalShake {
     children: React.ReactNode;
@@ -7,21 +8,21 @@ interface IHorizontalShake {
 }
 
 const HorizontalShake: React.FC<IHorizontalShake> = ({ children, className }) => {
-    const [state, setState] = useState(false);
+    const { appState, setAppState } = useContext(AppContext);
     const ref = useRef<HTMLDivElement>(null!);
     useClickOutsideElement(ref, handleOutsideClick);
 
     function handleOutsideClick() {
-        if(state) { return; }
-        setState(true);
+        if(appState.shakeLoginModal) { return; }
+        setAppState(changeStateShakeLogin(true));
         setTimeout(() => {
-            setState(false);
+            setAppState(changeStateShakeLogin(false));
         }, 400);
 
     }
 
     return (
-        <div ref={ref} className={ `${state ? "shake-horizontal": ""} ${className}` }>
+        <div ref={ref} className={ `${appState.shakeLoginModal ? "shake-horizontal": ""} ${className}` }>
             { children }
         </div>
     );
