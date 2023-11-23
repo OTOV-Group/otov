@@ -1,16 +1,17 @@
-import React from 'react';
-import {Navigate} from "react-router-dom";
-
+import React from "react";
+import { Navigate } from "react-router-dom";
 
 interface IPrivateRoute {
-    children: React.JSX.Element;
+  children: React.ReactNode;
 }
-const PrivateRoute: React.FC<IPrivateRoute> = ({ children }) => {
-    // if(!user) {
-    //     return <Navigate to="/"/>
-    // }
 
-    return (children);
+const PrivateRoute: React.FC<IPrivateRoute> = ({ children }) => {
+  const userIsAuthenticated = true; // Replace with your authentication logic
+  if (!userIsAuthenticated) {
+    return <Navigate to="/login" />;
+  }
+
+  return <>{children}</>;
 };
 
 export default PrivateRoute;

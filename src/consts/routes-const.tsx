@@ -1,6 +1,4 @@
 
-
-
 const HOME_ROUTE = "/";
 const PROFILE_ROUTE = "/profile";
 
