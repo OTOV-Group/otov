@@ -48,7 +48,7 @@ const Sidebar: React.FC = () => {
     <Box>
       <Box
         style={{
-          width: state ? "250px" : "40px",
+          width: state ? "250px" : "50px",
           transition: "width 0.3s ease-in-out",
         }}
         border="1px solid #000"
@@ -62,7 +62,7 @@ const Sidebar: React.FC = () => {
             background: "#fff",
             position: "relative",
             zIndex: 20,
-            left: state ? "220px" : "11px",
+            left: state ? "220px" : "21px",
             width: state ? "40px" : "40px",
             height: "40px",
             borderRadius: "50%",
@@ -74,16 +74,17 @@ const Sidebar: React.FC = () => {
         {links.map(({ link, icon, text }) => (
           <Box
             style={{
-              width: state ? "200px" : "20px",
+              width: state ? "200px" : "35px",
               transition: "width 0.3s ease-in-out",
               background: "#138d80",
             }}
             className="rounded-lg text-white text-2xl overflow-hidden"
           >
-            <Link className="flex items-center justify-evenly" to={link}>
-              <span>{icon}</span>
+            <Link className="flex items-center justify-evenly !px-2" to={link}>
+              <span className="px-2">{icon}</span>
               <p
                style={{
+                display : state ? '' : 'none',
               width: state ? "100px" : "0px",
               transition: "width 0.3s ease-in-out",
               background: "#138d80",
