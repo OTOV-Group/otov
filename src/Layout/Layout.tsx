@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "./Header/Header";
 import { Outlet } from "react-router-dom";
-import { Box } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import LoginModal from "../components/LoginModal/LoginModal";
 import RegisterModal from "../components/RegisterModal/RegisterModal";
 import ForgotModal from "../components/ForgotModal/ForgotModal";
@@ -14,10 +14,12 @@ const Layout = () => {
       <ForgotModal />
       <Header />
       <Box display="flex" flexDirection="row" width="100%">
-        <Sidebar/>
+        <Sidebar />
         <Box flex="1" p={4}>
           {/* Adjust padding and other styles as needed */}
-          <Outlet />
+          <Container>
+            <Outlet />
+          </Container>
         </Box>
       </Box>
     </Box>
