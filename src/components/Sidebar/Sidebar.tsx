@@ -7,6 +7,7 @@ import EngineeringIcon from "@mui/icons-material/Engineering";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 interface ILinks {
   icon: any;
@@ -29,7 +30,7 @@ const Sidebar: React.FC = () => {
     },
     {
       icon: <PersonIcon />,
-      text: "Profile",
+      text: "Regions",
       link: "/profile",
     },
     {
@@ -45,55 +46,80 @@ const Sidebar: React.FC = () => {
   ];
 
   return (
-    <Box>
       <Box
         style={{
-          width: state ? "250px" : "50px",
-          transition: "width 0.3s ease-in-out",
+            width: state ? "250px" : "0px",
+            transition: "width 0.3s ease-in-out",
+            background: "#138d80",
+            boxShadow: "4px 4px 8px 7px rgba(34, 60, 80, 0.2)",
+            padding: state ? "20px 10px" : "0px"
         }}
-        border="1px solid #000"
-        className="flex flex-col h-screen rounded-r-lg py-10 px-[7px] bg-green-100 gap-y-8"
+        className="relative flex flex-col h-screen rounded-r-lg gap-y-6"
       >
         <span
           onClick={handleSidebar}
-          className="flex items-center justify-center"
+          className="flex items-center justify-center bg-green-100"
           style={{
-           
-            background: "#fff",
-            position: "relative",
+            position: "absolute",
             zIndex: 20,
-            left: state ? "220px" : "21px",
-            width: state ? "40px" : "40px",
+            top: "30px",
+            right: state ? "-30px" : "-35px",
+            width: "40px",
             height: "40px",
-            borderRadius: "50%",
+              borderTopRightRadius: "10px",
+              borderBottomRightRadius: "10px",
             transition: "left 0.3s ease-in-out",
+              background: "#138d80",
           }}
         >
           {state ? <KeyboardArrowLeftIcon /> : <KeyboardArrowRightIcon />}
         </span>
-        {links.map(({ link, icon, text }) => (
           <Box
-            style={{
-              width: state ? "200px" : "35px",
-              transition: "width 0.3s ease-in-out",
-              background: "#138d80",
-            }}
-            className="rounded-lg text-white text-2xl overflow-hidden"
+              style={{
+                  transition: "width 0.3s ease-in-out",
+                  background: "#138d80",
+                  width: state ? "max-content" : "0px",
+              }}
+              className="rounded-lg text-white text-2xl overflow-hidden mx-auto"
           >
-            <Link className="flex items-center justify-evenly !px-2" to={link}>
-              <span className="px-2">{icon}</span>
-              <p
-               style={{
-                display : state ? '' : 'none',
-              width: state ? "100px" : "0px",
-              transition: "width 0.3s ease-in-out",
-              background: "#138d80",
-            }} >{text}</p>
-            </Link>
+              <Link className="flex flex-col" to={"/"}>
+                  <span>
+                      <AccountCircleIcon style={{
+                          fontSize: "110px"
+                      }}/>
+                  </span>
+                  <p
+                      style={{
+                          display : state ? '' : 'none',
+                          transition: "width 0.3s ease-in-out",
+                          background: "#138d80",
+                      }}
+                  >John Doe</p>
+              </Link>
           </Box>
-        ))}
+          <nav className="flex flex-col gap-y-2">
+            {links.map(({ link, icon, text }) => (
+                <Link
+                    to={link}
+                    style={{
+                        width: state ? "100%" : "0px",
+                        transition: "width background-color 0.3s ease-in-out",
+                        background: "#138d80",
+                    }}
+                    className="flex gap-x-4 rounded-lg text-white text-2xl overflow-hidden sidebar__link"
+                >
+                  <span className="w">{icon}</span>
+                  <p
+                   style={{
+                       display : state ? '' : 'none',
+                       width: state ? "max-content" : "0px",
+                       transition: "width 0.3s ease-in-out",
+                   }}
+                  >{text}</p>
+                </Link>
+            ))}
+          </nav>
       </Box>
-    </Box>
   );
 };
 

@@ -9,7 +9,7 @@ export enum AuthSteps {
     ShowLoginModal = 1,
     ShowRegisterModal = 2,
     ShowForgotModal = 3,
-
+    ShowVerifyModal = 4,
 }
 
 interface IState {
@@ -52,8 +52,9 @@ export const AppContext = createContext<IAppContext>(null!);
 const ContextProvider: React.FC<IContextProvider> = ({ children }) => {
     const [ state, setState ] = useState<IState>({
         isShowedAuthModal: AuthSteps.Closed,
-        shakeLoginModal: false
+        shakeLoginModal: false,
     });
+
 
 
     return (

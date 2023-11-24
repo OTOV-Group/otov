@@ -2,29 +2,50 @@ import React, { useState, useContext } from "react";
 import "./LoginModal.css";
 import CloseIcon from '@mui/icons-material/Close';
 import { AppContext, AuthSteps, changeStateAuthModals, changeStateShakeLogin } from "../../ContextProvider/ContextProvider";
-import { toastSuccess } from "../Toast/toast";
+import {toastError, toastSuccess} from "../Toast/toast";
 import HorizontalShake from "../HorizontalShake/HorizontalShake";
+import $host from "../../http";
 
 const LoginModal: React.FC = () => {
   const { appState, setAppState } = useContext(AppContext);
-  const [phoneNumber, setPhoneNumber] = useState("");
   const [phoneNumberError, setPhoneNumberError] = useState("");
+  const [ input, setInput ] = useState({
+    phone: "",
+    password: ""
+  });
 
   const closeModal = () => {
     setAppState(changeStateAuthModals(AuthSteps.Closed));
   };
 
-  const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPhoneNumber(e.target.value);
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const { phone, password } = input;
+      const { data } = await $host.post("/users/login", {
+        phone_number: phone,
+        password: password,
+      });
+      toastSuccess("Successfully signed in");
+      setAppState(changeStateAuthModals(AuthSteps.Closed));
+    } catch (e) {
+      if(e instanceof Error) {
+        toastError((e as any).response.data.message);
+      }
+      console.log(e);
+    }
+    // if (validatePhoneNumber()) {
+    //   toastSuccess("Successfully Signed In");
+    //   closeModal();
+    // }
+    //
   };
 
-  const handleSubmit = () => {
-    // Perform phone number validation before submitting
-    if (validatePhoneNumber()) {
-      toastSuccess("Successfully Signed In");
-      closeModal();
-    }
-  };
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setInput(prevState => ({ ...prevState, [name]: value }));
+  }
 
   function handleOutsideClick() {
     if(appState.shakeLoginModal) { return; }
@@ -35,20 +56,21 @@ const LoginModal: React.FC = () => {
 
 }
 
-  const validatePhoneNumber = () => {
-    // Define a regular expression for a valid phone number
-    const phoneRegex = /^\+998\d{9}$/;
 
-    // Check if the phone number matches the regular expression
-    if (!phoneRegex.test(phoneNumber)) {
-      setPhoneNumberError("Please enter a valid phone number");
-      handleOutsideClick();
-      return false;
-    } else {
-      setPhoneNumberError("");
-      return true;
-    }
-  };
+  // const validatePhoneNumber = () => {
+  //   // Define a regular expression for a valid phone number
+  //   const phoneRegex = /^\+998\d{9}$/;
+  //
+  //   // Check if the phone number matches the regular expression
+  //   if (!phoneRegex.test(phoneNumber)) {
+  //     setPhoneNumberError("Please enter a valid phone number");
+  //     handleOutsideClick();
+  //     return false;
+  //   } else {
+  //     setPhoneNumberError("");
+  //     return true;
+  //   }
+  // };
 
   const openModal = () => {
     setAppState(changeStateAuthModals(AuthSteps.ShowRegisterModal));
@@ -73,20 +95,20 @@ const LoginModal: React.FC = () => {
               </h1>
               <CloseIcon style={{ fill: "#fff" }} onClick={closeModal} className="cursor-pointer" />
             </div>
-            <form className="space-y-4 md:space-y-6" action="#" onSubmit={(e) => e.preventDefault()}>
+            <form className="space-y-4 md:space-y-6" action="#" onSubmit={handleSubmit}>
               <div>
                 <label htmlFor="number" className={`block mb-2 text-sm font-medium ${phoneNumberError ? 'text-red-500' : 'text-gray-900'} dark:text-white`}>
                   Your number
                 </label>
                 <input
-                  type="tel"
-                  name="number"
-                  id="number"
-                  value={phoneNumber}
-                  onChange={handlePhoneNumberChange}
-                  className={`bg-gray-50 border ${phoneNumberError ? 'text-red-500' : 'border-gray-300'} text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600  block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400  `}
-                  placeholder="+99800 000 00 00"
-                  required
+                    type="tel"
+                    name="phone"
+                    id="phone"
+                    value={input.phone}
+                    onChange={handleChange}
+                    className={`bg-gray-50 border ${phoneNumberError ? 'text-red-500' : 'border-gray-300'} text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600  block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400  `}
+                    placeholder="+99800 000 00 00"
+                    required
                 />
                 {phoneNumberError && <p className="text-white text-sm mt-1">{phoneNumberError}</p>}
               </div>
@@ -95,12 +117,14 @@ const LoginModal: React.FC = () => {
                   Password
                 </label>
                 <input
-                  type="password"
-                  name="password"
-                  id="password"
-                  placeholder="••••••••"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  required
+                    value={input.password}
+                    onChange={handleChange}
+                    type="password"
+                    name="password"
+                    id="password"
+                    placeholder="••••••••"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    required
                 />
               </div>
               <div className="flex items-center justify-between">

@@ -20,8 +20,12 @@ body {
     background: #EAEDF0;
 }
 
-.shake-horizontal {
-    animation: horizontal-shaking .4s ease-in-out;
+.sidebar__link {
+    padding: 0 10px;
+}
+
+.sidebar__link:hover {
+    background-color: rgba(0, 0, 0, 0.3) !important;
 }
 
 @keyframes horizontal-shaking {

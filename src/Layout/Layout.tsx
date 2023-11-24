@@ -16,7 +16,6 @@ const Layout = () => {
       <Box display="flex" flexDirection="row" width="100%">
         <Sidebar />
         <Box flex="1" p={4}>
-          {/* Adjust padding and other styles as needed */}
           <Container>
             <Outlet />
           </Container>
