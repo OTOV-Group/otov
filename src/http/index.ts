@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const API_URL = "http://localhost:8080/api/v1/";
+export const API_URL = "https://otov-backend-production.up.railway.app/api/v1/";
 
 const $host = axios.create({
     baseURL: API_URL,

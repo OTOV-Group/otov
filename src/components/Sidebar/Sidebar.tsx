@@ -75,7 +75,7 @@ const Sidebar: React.FC = () => {
                 boxShadow: "4px 4px 8px 7px rgba(34, 60, 80, 0.2)",
                 padding: state ? "20px 10px" : "0px"
             }}
-            className="relative flex flex-col h-screen rounded-r-lg gap-y-6"
+            className="relative flex flex-col h-[90vh] rounded-r-lg gap-y-6"
         >
         <span
             onClick={handleSidebar}
