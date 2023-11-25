@@ -20,14 +20,6 @@ body {
     background: #EAEDF0;
 }
 
-.sidebar__link {
-    padding: 0 10px;
-}
-
-.sidebar__link:hover {
-    background-color: rgba(0, 0, 0, 0.3) !important;
-}
-
 @keyframes horizontal-shaking {
     0% {
         transform: translate(0);
