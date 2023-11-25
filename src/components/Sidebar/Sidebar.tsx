@@ -1,13 +1,15 @@
-import React, {useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {Box} from "@mui/material";
 import {Link} from "react-router-dom";
 import SettingsIcon from "@mui/icons-material/Settings";
 import PersonIcon from "@mui/icons-material/Person";
 import EngineeringIcon from "@mui/icons-material/Engineering";
-import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import PendingActionsIcon from '@mui/icons-material/PendingActions';
+import TelegramIcon from '@mui/icons-material/Telegram';
+import { useClickOutsideElement } from "../../hooks/useClickOutsideElement";
 
 interface ILinks {
     icon: any;
@@ -16,11 +18,20 @@ interface ILinks {
 }
 
 const Sidebar: React.FC = () => {
+
+  
     const [state, setState] = useState<boolean>(true);
+
+    const ref = useRef<HTMLDivElement>(null!);
+    useClickOutsideElement(ref, OutSideClick);
 
     const handleSidebar = () => {
         setState((prevState) => !prevState);
     };
+    function OutSideClick(){
+
+      setState(false);
+    }
 
     const links: ILinks[] = [
         {
@@ -31,12 +42,21 @@ const Sidebar: React.FC = () => {
         {
             icon: <PersonIcon/>,
             text: "Regions",
-            link: "/profile",
+            link: "/regions",
         },
         {
             icon: <EngineeringIcon/>,
             text: "Works",
             link: "/works",
+        }, 
+        {
+            icon: <PendingActionsIcon/>,
+            text: "Activities",
+            link: "/activities",
+        },{
+            icon: <TelegramIcon/>,
+            text: "Chats",
+            link: "/chats",
         },
         {
             icon: <SettingsIcon/>,
@@ -47,6 +67,7 @@ const Sidebar: React.FC = () => {
 
     return (
         <Box
+        ref={ref}
             style={{
                 width: state ? "250px" : "0px",
                 transition: "width 0.3s ease-in-out",
@@ -77,13 +98,13 @@ const Sidebar: React.FC = () => {
         </span>
             <Box
                 style={{
-                    transition: "width 0.3s ease-in-out",
+                  width: state ? "130px" : "0px",
+                    transition: "0.3s ease-in-out",
                     background: "#138d80",
-                    width: state ? "max-content" : "0px",
                 }}
                 className="rounded-lg text-white text-2xl overflow-hidden mx-auto"
             >
-                <Link className="flex flex-col" to={"/"}>
+                <Link className="flex flex-col" to={"/profile"} >
                   <span>
                       <AccountCircleIcon style={{
                           fontSize: "110px"
@@ -92,13 +113,14 @@ const Sidebar: React.FC = () => {
                     <p
                         style={{
                             display: state ? '' : 'none',
-                            transition: "width 0.3s ease-in-out",
+                            width: state ? "150px" : "0px",
+                            transition: "0.3s ease-in-out",
                             background: "#138d80",
                         }}
                     >John Doe</p>
                 </Link>
             </Box>
-            <nav className="flex flex-col gap-y-2">
+            <nav className="flex flex-col gap-y-4">
                 {links.map(({link, icon, text}) => (
                     <Link
                         to={link}

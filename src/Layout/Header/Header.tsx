@@ -7,6 +7,7 @@ import ButtonMaterial from '@mui/material/Button';
 import DarkModeButton from "../../ui/DarkMode/DarkModeButton";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import {AppContext, AuthSteps, changeStateAuthModals} from "../../ContextProvider/ContextProvider";
+import { Link } from 'react-router-dom';
 
 const Header = () => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -72,9 +73,9 @@ const Header = () => {
                         <MenuItem onClick={handleClose}>Узбекский</MenuItem>
                     </Menu>
                 </div>
-                <div className="ml-auto">
+                <Link to={'/'} className="ml-auto">
                     <Logo/>
-                </div>
+                </Link>
                 <div className="ml-auto mr-10 flex">
                     <DarkModeButton/>
                 </div>
