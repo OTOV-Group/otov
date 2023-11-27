@@ -4,6 +4,7 @@ import React, {useEffect, useRef} from 'react';
 interface YandexMapProps {
     center: number[]; // [latitude, longitude]
     zoom: number;
+    coords: number[][];
 }
 
 declare global {
@@ -16,7 +17,7 @@ declare global {
     }
 }
 
-const YandexMap: React.FC<YandexMapProps> = ({ center, zoom }) => {
+const YandexMap: React.FC<YandexMapProps> = ({ center, zoom, coords }) => {
     const mapRef = useRef<HTMLDivElement>(null!);
 
     useEffect(() => {
@@ -34,8 +35,10 @@ const YandexMap: React.FC<YandexMapProps> = ({ center, zoom }) => {
         currentMapRef.appendChild(ymapsScript);
 
         const initMap = () => {
+            const firstCoord = center;
+
             const map = new window.ymaps.Map('map', {
-                center: center,
+                center: firstCoord,
                 zoom: zoom,
                 controls: ['zoomControl', 'geolocationControl', 'typeSelector', 'fullscreenControl']
             });
@@ -45,13 +48,25 @@ const YandexMap: React.FC<YandexMapProps> = ({ center, zoom }) => {
                 yandexMapDisablePoiInteractivity: true
             });
 
-            const myPlacemark = new window.ymaps.Placemark(center, {
-                hintContent: 'A custom placemark',
-                balloonContent: 'This is a Yandex Marker!',
+            // Add a Placemark for each coordinate pair
+            coords.forEach((coordinate) => {
+                const placemark = new window.ymaps.Placemark(coordinate, {
+                    hintContent: 'A custom placemark',
+                    balloonContent: 'This is a Yandex Marker!',
+                }, {
+                    iconLayout: 'default#image',
+                    // Своё изображение иконки метки.
+                    iconImageHref: './map-mark.svg',
+                    // Размеры метки.
+                    iconImageSize: [30, 42],
+                    // Смещение левого верхнего угла иконки относительно
+                    // её "ножки" (точки привязки).
+                    iconImageOffset: [-5, -38]
+                });
+                map.geoObjects.add(placemark);
             });
-
-            map.geoObjects.add(myPlacemark);
         };
+
 
         return () => {
             if (currentMapRef) {

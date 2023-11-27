@@ -5,7 +5,7 @@ import { Box, Container } from "@mui/material";
 import LoginModal from "../components/LoginModal/LoginModal";
 import RegisterModal from "../components/RegisterModal/RegisterModal";
 import ForgotModal from "../components/ForgotModal/ForgotModal";
-import Sidebar from "../components/Sidebar/Sidebar";
+import Sidebar from "./Sidebar/Sidebar";
 const Layout = () => {
   return (
     <Box>

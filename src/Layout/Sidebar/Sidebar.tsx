@@ -99,26 +99,31 @@ const Sidebar: React.FC = () => {
                 </Link>
             </Box>
             <nav className="flex flex-col gap-y-2">
-                {links.map(({link, icon, text}) => (
-                    <Link
-                        to={link}
-                        style={{
-                            width: state ? "100%" : "0px",
-                            transition: "0.3s ease-in-out",
-                            background: "#138d80",
-                        }}
-                        className="flex gap-x-4 rounded-lg text-white text-2xl overflow-hidden sidebar__link"
-                    >
-                        <span className="w">{icon}</span>
-                        <p
+                <ul>
+                    {links.map(({link, icon, text}) => (
+                        <li
+                            className="flex gap-x-4 rounded-lg text-white text-2xl overflow-hidden px-2 hover:bg-gray-950"
                             style={{
-                                display: state ? '' : 'none',
-                                width: state ? "max-content" : "0px",
-                                transition: "width 0.3s ease-in-out",
+                                width: state ? "100%" : "0px",
+                                transition: "0.3s ease-in-out",
+                                background: "#138d80",
                             }}
-                        >{text}</p>
-                    </Link>
-                ))}
+                        >
+                            <Link
+                                to={link}
+                            >
+                                <span className="w">{icon}</span>
+                                <p
+                                    style={{
+                                        display: state ? '' : 'none',
+                                        width: state ? "max-content" : "0px",
+                                        transition: "width 0.3s ease-in-out",
+                                    }}
+                                >{text}</p>
+                            </Link>
+                        </li>
+                    ))}
+                </ul>
             </nav>
         </Box>
     );
