@@ -7,8 +7,11 @@ import ButtonMaterial from '@mui/material/Button';
 import DarkModeButton from "../../ui/DarkMode/DarkModeButton";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import {AppContext, AuthSteps, changeStateAuthModals} from "../../ContextProvider/ContextProvider";
+import { Link } from 'react-router-dom';
 
 const Header = () => {
+
+    const user = true;
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -18,7 +21,7 @@ const Header = () => {
         setAnchorEl(null);
     };
 
-    const {appState, setAppState} = useContext(AppContext);
+    const { setAppState } = useContext(AppContext);
     const openModal = () =>{
         setAppState(changeStateAuthModals(AuthSteps.ShowLoginModal));
     }
@@ -72,16 +75,16 @@ const Header = () => {
                         <MenuItem onClick={handleClose}>Узбекский</MenuItem>
                     </Menu>
                 </div>
-                <div className="ml-auto">
+                <Link to={'/'} className="ml-auto">
                     <Logo/>
-                </div>
+                </Link>
                 <div className="ml-auto mr-10 flex">
                     <DarkModeButton/>
                 </div>
                 <div>
                     <Button
                         onClick={openModal}
-                        label={"Войти"}
+                        label={user ? "Войти" : "Выйти"}
                         type="light"
                         rightIcon={
                                 <div className="ml-[8px]">
