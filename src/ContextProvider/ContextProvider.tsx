@@ -15,6 +15,7 @@ export enum AuthSteps {
 interface IState {
     isShowedAuthModal: AuthSteps;
     shakeLoginModal: boolean;
+    sideOpen: boolean;
 }
 
 interface IAppContext {
@@ -28,6 +29,16 @@ export function changeStateShakeLogin(type: boolean): (prevState: IState) => ISt
             ...prevState,
             shakeLoginModal: type
         };
+    }
+}
+
+
+export function changeSidebarState(type: boolean) : (prevState: IState) => IState{
+    return function handleSidebar(prevState: IState): IState {
+        return {
+            ...prevState,
+            sideOpen: type
+        }
     }
 }
 
@@ -53,12 +64,13 @@ const ContextProvider: React.FC<IContextProvider> = ({ children }) => {
     const [ state, setState ] = useState<IState>({
         isShowedAuthModal: AuthSteps.Closed,
         shakeLoginModal: false,
+        sideOpen: false,
     });
 
 
 
     return (
-        <AppContext.Provider value={{ appState: state, setAppState: setState }}>
+        <AppContext.Provider value={{ appState: state, setAppState: setState,  }}>
             {children}
         </AppContext.Provider>
     );

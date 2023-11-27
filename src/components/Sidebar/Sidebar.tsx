@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useContext, useRef} from "react";
 import {Box} from "@mui/material";
 import {Link} from "react-router-dom";
 import SettingsIcon from "@mui/icons-material/Settings";
@@ -10,6 +10,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import PendingActionsIcon from '@mui/icons-material/PendingActions';
 import TelegramIcon from '@mui/icons-material/Telegram';
 import { useClickOutsideElement } from "../../hooks/useClickOutsideElement";
+import { AppContext, changeSidebarState } from "../../ContextProvider/ContextProvider";
 
 interface ILinks {
     icon: any;
@@ -18,19 +19,20 @@ interface ILinks {
 }
 
 const Sidebar: React.FC = () => {
-
+    const { appState, setAppState } = useContext(AppContext);
   
-    const [state, setState] = useState<boolean>(true);
-
     const ref = useRef<HTMLDivElement>(null!);
     useClickOutsideElement(ref, OutSideClick);
 
-    const handleSidebar = () => {
-        setState((prevState) => !prevState);
+    function handleSidebar() {
+       if (appState.sideOpen){
+            setAppState(changeSidebarState(false))
+       }else{
+        setAppState(changeSidebarState(true))
+       }
     };
     function OutSideClick(){
-
-      setState(false);
+      setAppState(changeSidebarState(false));
     }
 
     const links: ILinks[] = [
@@ -69,11 +71,11 @@ const Sidebar: React.FC = () => {
         <Box
         ref={ref}
             style={{
-                width: state ? "250px" : "0px",
+                width: appState.sideOpen ? "250px" : "0px",
                 transition: "width 0.3s ease-in-out",
                 background: "#138d80",
                 boxShadow: "4px 4px 8px 7px rgba(34, 60, 80, 0.2)",
-                padding: state ? "20px 10px" : "0px"
+                padding: appState.sideOpen ? "20px 10px" : "0px"
             }}
             className="relative flex flex-col h-[90vh] rounded-r-lg gap-y-6"
         >
@@ -83,7 +85,7 @@ const Sidebar: React.FC = () => {
             style={{
                 position: "absolute",
                 top: "30px",
-                right: state ? "-30px" : "-35px",
+                right: appState.sideOpen ? "-30px" : "-35px",
                 width: "40px",
                 height: "40px",
                 borderTopRightRadius: "10px",
@@ -93,12 +95,12 @@ const Sidebar: React.FC = () => {
             }}
         >
             <KeyboardArrowLeftIcon
-                style={{transition: ".3s ease-in-out", transform: `rotate(${state ? "0" : "180deg"})`}}
+                style={{transition: ".3s ease-in-out", transform: `rotate(${appState.sideOpen ? "0" : "180deg"})`}}
             />
         </span>
             <Box
                 style={{
-                  width: state ? "130px" : "0px",
+                  width: appState.sideOpen ? "130px" : "0px",
                     transition: "0.3s ease-in-out",
                     background: "#138d80",
                 }}
@@ -112,8 +114,8 @@ const Sidebar: React.FC = () => {
                   </span>
                     <p
                         style={{
-                            display: state ? '' : 'none',
-                            width: state ? "150px" : "0px",
+                            display: appState.sideOpen ? '' : 'none',
+                            width: appState.sideOpen ? "150px" : "0px",
                             transition: "0.3s ease-in-out",
                             background: "#138d80",
                         }}
@@ -125,7 +127,7 @@ const Sidebar: React.FC = () => {
                     <Link
                         to={link}
                         style={{
-                            width: state ? "100%" : "0px",
+                            width: appState.sideOpen ? "100%" : "0px",
                             transition: "0.3s ease-in-out",
                             background: "#138d80",
                         }}
@@ -134,8 +136,8 @@ const Sidebar: React.FC = () => {
                         <span className="w">{icon}</span>
                         <p
                             style={{
-                                display: state ? '' : 'none',
-                                width: state ? "max-content" : "0px",
+                                display: appState.sideOpen ? '' : 'none',
+                                width: appState.sideOpen ? "max-content" : "0px",
                                 transition: "width 0.3s ease-in-out",
                             }}
                         >{text}</p>
