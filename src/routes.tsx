@@ -5,8 +5,9 @@ import {
   SETTINGS_ROUTE,
   WORKS_ROUTE,
   REGIONS_ROUTE,
-  CHATS,
+  CHATS_ROUTE,
   ACTIVITIES_ROUTE,
+  ABOUT_ROUTE
 } from "./consts/routes-const";
 
 const Profile = lazy(() => import("./pages/Profile/Profile"));
@@ -16,6 +17,7 @@ const Works = lazy(() => import("./pages/Works/Works"));
 const Activities = lazy(() => import("./pages/Activities/Activities"))
 const Chats = lazy(() => import("./pages/Chat/Chat"));
 const Settings = lazy(() => import("./pages/Settings/Settings"));
+const About = lazy(() => import("./pages/About/About"));
 
 
 export const routes = [
@@ -46,13 +48,18 @@ export const routes = [
     index: false,
   },
   {
-    path: CHATS,
+    path: CHATS_ROUTE,
     Element: Chats,
     index: false,
   },
   {
     path: SETTINGS_ROUTE,
     Element: Settings,
+    index: false,
+  },
+  {
+    path: ABOUT_ROUTE,
+    Element: About,
     index: false,
   },
 ];

@@ -2,7 +2,7 @@ import { styled } from "@mui/material/styles";
 
 export const HtmlHeader = styled("header")(() => ({
   width: "100%",
-  height: "70px",
+  height: "90px",
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
@@ -10,9 +10,9 @@ export const HtmlHeader = styled("header")(() => ({
 }));
 
 export const Main = styled("main")(() => ({
-  backgroundColor: "transparent", //#e0e0e0
+  backgroundColor: "#138d80", //#e0e0e0
   width: "100%",
-  height: "100vh",
+  height: "80vh",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
