@@ -16,6 +16,7 @@ import {
   changeSidebarState,
 } from "../../ContextProvider/ContextProvider";
 
+
 interface ILinks {
   icon: any;
   text: string;
@@ -154,7 +155,7 @@ const Sidebar: React.FC = () => {
         {links.map(({ link, icon, text, user }) =>
           // Check if the link is for a user and if it is, check if user is true
           (user && isUser) || user ? (
-            <Link
+            <Link key={link}
               to={link}
               style={{
                 width: appState.sideOpen ? "100%" : "0px",
